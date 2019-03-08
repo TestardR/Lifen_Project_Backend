@@ -19,7 +19,7 @@ function ShiftWorker(first_name, price_per_shift, id) {
   this.price_per_shift = price_per_shift;
   this.id = id;
 
-  this.salary = function() {
+  this.salary = () => {
     let count = 0;
     let salary = 0;
     for (let i = 0; i < data.shifts.length; i++) {
@@ -31,14 +31,14 @@ function ShiftWorker(first_name, price_per_shift, id) {
     return salary;
   };
 
-  this.payment = function() {
+  this.payment = () => {
     return `For this schedule, ${
       this.first_name
     } should be paid ${this.salary()} euros.`;
   };
 
   // List that will be parsed to JSON and written to output.json
-  this.addToList = function() {
+  this.addToList = () => {
     list.push(this.payment());
   };
 }
@@ -74,9 +74,9 @@ const obj = {
   list
 };
 
-const addToOuput = function() {
+const addToOuput = () => {
   const fs = require('fs');
-  fs.writeFile('output.json', JSON.stringify(obj), function(err) {
+  fs.writeFile('output.json', JSON.stringify(obj), err => {
     if (err) throw err;
     console.log('complete');
   });
