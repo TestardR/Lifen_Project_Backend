@@ -3,12 +3,14 @@ const data = require('./data.json');
 const fs = require('fs');
 
 // Constructor
-function ShiftWorker(first_name, price_per_shift, id) {
-  this.first_name = first_name;
-  this.price_per_shift = price_per_shift;
-  this.id = id;
+class ShiftWorker {
+  constructor(first_name, price_per_shift, id) {
+    this.first_name = first_name;
+    this.price_per_shift = price_per_shift;
+    this.id = id;
+  }
 
-  this.salary = () => {
+  salary() {
     let count = 0;
     let salary = 0;
     for (let i = 0; i < data.shifts.length; i++) {
@@ -18,13 +20,13 @@ function ShiftWorker(first_name, price_per_shift, id) {
       salary = count * this.price_per_shift;
     }
     return salary;
-  };
+  }
 
-  this.payment = () => {
+  payment() {
     return `For this schedule, ${
       this.first_name
     } should be paid ${this.salary()} euros.`;
-  };
+  }
 }
 
 const employees = [];
