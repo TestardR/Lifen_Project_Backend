@@ -22,6 +22,16 @@ router.get('/', (req, res) => {
     );
 });
 
+// @route   GET api/workers/:id
+// @desc    Get worker by id
+router.get('/:id', (req, res) => {
+  Worker.findById(req.params.id)
+    .then(worker => res.json(worker))
+    .catch(err =>
+      res.status(404).json({ noworkerfound: 'No worker found with this id' })
+    );
+});
+
 // @route   POST api/workers/register
 // @desc    Registration worker
 router.post('/register', (req, res) => {
@@ -34,6 +44,29 @@ router.post('/register', (req, res) => {
     .save()
     .then(worker => res.json(worker))
     .catch(err => console.log(err));
+});
+
+// @route   PUT api/workers/:id
+// @desc    Update worker
+router.put('/:id', (req, res) => {
+  Worker.findOne({ _id: req.params.id })
+    .then(worker => {
+      worker.name = req.body.name;
+      worker.status = req.body.status;
+      worker.save();
+    })
+    .then(() => res.json({ success: true }));
+});
+
+// @route   DELETE api/workers/:id
+// @desc    Delete worker
+router.delete('/:id', (req, res) => {
+  Post.findById(req.params.id)
+    .then(worker => {
+      // Delete
+      worker.remove().then(() => res.json({ success: true }));
+    })
+    .catch(err => res.status(404).json({ workernotfound: 'No worker found' }));
 });
 
 module.exports = router;
