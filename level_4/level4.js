@@ -1,6 +1,7 @@
 // import data.json
 const data = require('./data.json');
 const fs = require('fs');
+const helpers = require('./helpers');
 
 // Constructor
 class ShiftWorker {
