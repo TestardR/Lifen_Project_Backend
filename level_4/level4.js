@@ -124,9 +124,9 @@ jsonify();
 // Write to output.json
 const list = {};
 const workers = 'workers';
-const commission = 'commissions';
-list[commission] = [];
+const commission = 'commission';
 list[workers] = [];
+list[commission] = jsonify();
 
 // Write price and id
 for (let employee of employees) {
@@ -134,7 +134,6 @@ for (let employee of employees) {
 }
 
 // Write commission and number of interim_shifts
-list[commission].push(jsonify());
 
 const writeToOutput = () => {
   fs.writeFile('output.json', JSON.stringify(list), err => {
