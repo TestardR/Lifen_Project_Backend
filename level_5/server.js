@@ -1,8 +1,15 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const path = require('path');
+
+const workers = require('./routes/api/workers');
 
 const app = express();
+
+// Body parser middleware
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 // DB Config
 const db = require('./config/keys').mongoURI;
@@ -12,14 +19,6 @@ mongoose
   .connect(db, { useNewUrlParser: true })
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.log('Error: ', err));
-
-// Body parser middleware
-app.use(bodyParser.json());
-app.use(
-  bodyParser.urlencoded({
-    extended: true
-  })
-);
 
 // Use Routes to connect, save typing (see routes)
 app.use('/api/workers', workers);
