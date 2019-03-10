@@ -22,10 +22,9 @@ class ShiftWorker {
     return salary;
   }
 
-  payment() {
-    return `For this schedule, ${
-      this.first_name
-    } should be paid ${this.salary()} euros.`;
+  jsonify() {
+    const myJSON = `{"id": ${this.id}, "price": ${this.salary()}}`;
+    return JSON.parse(myJSON);
   }
 }
 
@@ -41,10 +40,12 @@ for (let i = 0; i < data.workers.length; i++) {
 }
 
 // Write to output.json
-const list = [];
+const list = {};
+const key = 'workers';
+list[key] = [];
 
 for (let employee of employees) {
-  list.push(employee.payment());
+  list[key].push(employee.jsonify());
 }
 
 const writeToOutput = () => {

@@ -1,1 +1,8 @@
-["For this schedule, Julie should be paid 810 euros.","For this schedule, Marc should be paid 810 euros.","For this schedule, Antoine should be paid 252 euros.","For this schedule, Emilie should be paid 540 euros."]
+{
+  "workers": [
+    { "id": 1, "price": 810 },
+    { "id": 2, "price": 810 },
+    { "id": 3, "price": 252 },
+    { "id": 4, "price": 540 }
+  ]
+}

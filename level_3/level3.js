@@ -1,29 +1,17 @@
-/*
-We are building an online night-shift manager. Let's call it Planning de Garde :)
-Here is our plan:
-
-    a hospital schedule shifts for all their plannings
-    shift workers manage their shifts
-
-Level 1
-Once the hospital has scheduled all shifts, it want to know how much each shift worker is supposed to be paid. Each shift is paid according to the worker assigned to the shift.
-Write code that generates output.json from data.json
-*/
-
 // import data.json
 const data = require('./data.json');
+const fs = require('fs');
 
 // Constructor
-function ShiftWorker(first_name, status, id) {
-  this.first_name = first_name;
-  this.status = status;
-  this.id = id;
+class ShiftWorker {
+  constructor(id, first_name, status) {
+    this.id = id;
+    this.first_name = first_name;
+    this.status = status;
+  }
 
-  this.salary = () => {
+  salary() {
     let count = 0;
-    let salary = 0;
-    // Count the number of shifts
-    // If shift on sunday or saturday, double the shift
     for (let i = 0; i < data.shifts.length; i++) {
       if (data.shifts[i].user_id === this.id) {
         if (
@@ -35,67 +23,42 @@ function ShiftWorker(first_name, status, id) {
         count++;
       }
     }
-    // Salary per status
-    for (let i = 0; i < data.workers.length; i++) {
-      if (data.workers[i].status === 'medic') {
-        salary = 270;
-      } else {
-        salary = 126;
-      }
-    }
-    return salary * count;
-  };
+    let price_per_shift = 0;
+    this.status === 'medic' ? (price_per_shift = 270) : (price_per_shift = 126);
+    return count * price_per_shift;
+  }
 
-  this.payment = () => {
-    return `For this schedule, ${
-      this.first_name
-    } should be paid ${this.salary()} euros.`;
-  };
-
-  // List that will be parsed to JSON and written to output.json
-  this.addToList = () => {
-    list.push(this.payment());
-  };
+  jsonify() {
+    const myJSON = `{"id": ${this.id}, "price": ${this.salary()}}`;
+    return JSON.parse(myJSON);
+  }
 }
 
-// Constructor instanciation for Julie
-const Julie = new ShiftWorker(
-  data.workers[0].first_name,
-  data.workers[0].status,
-  data.workers[0].id
-);
-
-// Constructor instanciation for Marc
-const Marc = new ShiftWorker(
-  data.workers[1].first_name,
-  data.workers[1].status,
-  data.workers[1].id
-);
-
-// Constructor instanciation for Antoine
-const Antoine = new ShiftWorker(
-  data.workers[2].first_name,
-  data.workers[2].status,
-  data.workers[2].id
-);
+const employees = [];
+for (let i = 0; i < data.workers.length; i++) {
+  employees.push(
+    new ShiftWorker(
+      data.workers[i].id,
+      data.workers[i].first_name,
+      data.workers[i].status
+    )
+  );
+}
 
 // Write to output.json
-const list = [];
+const list = {};
+const key = 'workers';
+list[key] = [];
 
-Julie.addToList();
-Marc.addToList();
-Antoine.addToList();
+for (let employee of employees) {
+  list[key].push(employee.jsonify());
+}
 
-const obj = {
-  list
-};
-
-const addToOuput = () => {
-  const fs = require('fs');
-  fs.writeFile('output.json', JSON.stringify(obj), err => {
+const writeToOutput = () => {
+  fs.writeFile('output.json', JSON.stringify(list), err => {
     if (err) throw err;
     console.log('complete');
   });
 };
 
-addToOuput();
+writeToOutput();
