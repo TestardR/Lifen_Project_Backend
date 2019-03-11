@@ -1,11 +1,11 @@
 <h1 style="text-align: center">Assign a Shift</h1>
-
+<sub>Date format : yyyy-mm-dd</sub>
 <form action="/api/shifts/<%=shift.id%>?_method=PUT" method="POST">
   <input
     type="text"
     name="start_date"
     value="<%=
-  shift.start_date %>"
+  shift.start_date.toDateString() %>"
   />
 
   <input type="text" name="user_id" value="<%= shift.user_id %>" />

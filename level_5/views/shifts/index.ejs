@@ -1,5 +1,5 @@
 <h1>Welcome to our hospital management</h1>
-
+<a href="/api/workers">Check workers</a>
 <table>
   <h2>Shift's List</h2>
   <tr>
@@ -11,9 +11,8 @@
 
   <% shifts.forEach(function(shift){ %>
   <tr>
-    <td><%= shift.start_date %></td>
+    <td><%= shift.start_date.toDateString() %></td>
     <td><%= shift.user_id %></td>
-    <td><%= shift.id %></td>
     <td>
       <form action="/api/shifts/<%= shift.id %>?_method=DELETE" method="POST">
         <button>
