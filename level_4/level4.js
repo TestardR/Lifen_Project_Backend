@@ -93,18 +93,13 @@ for (let employee of employees) {
 
 // 2. Calculte the extra 80$ for the interim shifts
 function interimShifts() {
-  let id = 0;
   let interim_shifts = 0;
-  for (let i = 0; i < data.workers.length; i++) {
-    if (data.workers[i].status === 'interim') {
-      id = data.workers[i].id;
-    }
-    for (let j = 0; j < data.shifts.length; j++) {
-      if (data.shifts[j].user_id === id) {
-        interim_shifts++;
-      }
-    }
-  }
+
+  data.shifts.forEach(shift => {
+    var shiftWorker = helpers.FirstOrDefault(data.workers, 'id', shift.user_id);
+    if (shiftWorker.status === 'interim') interim_shifts++;
+  });
+
   return interim_shifts;
 }
 
