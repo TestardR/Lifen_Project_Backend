@@ -1,3 +1,42 @@
 <h1>Welcome to our hospital management</h1>
 
-<h3><%= workers[0].name %></h3>
+<table>
+  <h2>Worker's List</h2>
+  <tr>
+    <th>Name</th>
+    <th>Status</th>
+    <th>ID</th>
+    <th>Delete</th>
+  </tr>
+
+  <% workers.forEach(function(worker){ %>
+  <tr>
+    <td><%= worker.name %></td>
+    <td><%= worker.status %></td>
+    <td><%= worker.id %></td>
+    <td>
+      <form action="/api/workers/<%= worker.id %>?_method=DELETE" method="POST">
+        <button>
+          X
+        </button>
+      </form>
+    </td>
+  </tr>
+  <% }); %>
+</table>
+
+<h2>Add a new worker</h2>
+<div>
+  <form action="/api/workers/register" method="POST">
+    <input class="form-control" type="text" name="name" placeholder="name" />
+
+    <input
+      class="form-control"
+      type="text"
+      name="status"
+      placeholder="status"
+    />
+
+    <button class="btn btn-lg btn-primary btn-block">Add</button>
+  </form>
+</div>

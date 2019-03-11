@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const path = require('path');
+const methodOverride = require('method-override');
 
 const workers = require('./routes/api/workers');
 const shifts = require('./routes/api/shifts');
@@ -16,6 +17,7 @@ app.use(bodyParser.json());
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+app.use(methodOverride('_method'));
 
 // DB Config
 const db = require('./config/keys').mongoURI;
