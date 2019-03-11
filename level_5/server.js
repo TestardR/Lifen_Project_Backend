@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 
 const workers = require('./routes/api/workers');
+const shifts = require('./routes/api/shifts');
 
 const app = express();
 
@@ -22,6 +23,7 @@ mongoose
 
 // Use Routes to connect, save typing (see routes)
 app.use('/api/workers', workers);
+app.use('/api/shifts', shifts);
 
 const port = 5000;
 

@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-// Load User model
+// Load Worker model
 const Worker = require('../../models/Worker');
 
-// @route   GET api/users/test
-// @desc    Tests user route
+// @route   GET api/workers/test
+// @desc    Tests worker route
 router.get('/test', (req, res) => {
   // output json, automatically gives status 200
   res.json({ msg: 'Workers Works' });
@@ -61,7 +61,7 @@ router.put('/:id', (req, res) => {
 // @route   DELETE api/workers/:id
 // @desc    Delete worker
 router.delete('/:id', (req, res) => {
-  Post.findById(req.params.id)
+  Worker.findById(req.params.id)
     .then(worker => {
       // Delete
       worker.remove().then(() => res.json({ success: true }));
