@@ -17,7 +17,8 @@ router.get('/test', (req, res) => {
 router.get('/', (req, res) => {
   Worker.find()
     .sort({ name: 1 }) // sort by date
-    .then(worker => res.json(worker))
+    // .then(worker => res.json(worker))
+    .then(result => res.render('index.ejs', { workers: result }))
     .catch(err =>
       res.status(404).json({ noworkersfound: 'No workers found with this id' })
     );
