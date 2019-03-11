@@ -1,0 +1,55 @@
+<h1>Welcome to our hospital management</h1>
+
+<table>
+  <h2>Shift's List</h2>
+  <tr>
+    <th>Start_date</th>
+    <th>Assigned at</th>
+    <th>Delete</th>
+    <th>Assign</th>
+  </tr>
+
+  <% shifts.forEach(function(shift){ %>
+  <tr>
+    <td><%= shift.start_date %></td>
+    <td><%= shift.user_id %></td>
+    <td><%= shift.id %></td>
+    <td>
+      <form action="/api/shifts/<%= shift.id %>?_method=DELETE" method="POST">
+        <button>
+          X
+        </button>
+      </form>
+    </td>
+    <td>
+      <form>
+        <a href="/api/shifts/<%= shift.id %>">
+          O
+        </a>
+      </form>
+    </td>
+  </tr>
+  <% }); %>
+</table>
+
+<h2>Add a new shift</h2>
+<sub>Date format : yyyy-mm-dd</sub>
+<div>
+  <form action="/api/shifts/register" method="POST">
+    <input
+      class="form-control"
+      type="text"
+      name="start_date"
+      placeholder="start_date"
+    />
+
+    <input
+      class="form-control"
+      type="text"
+      name="user_id"
+      placeholder="worker's id"
+    />
+
+    <button class="btn btn-lg btn-primary btn-block">Add</button>
+  </form>
+</div>

@@ -1,0 +1,16 @@
+<h1 style="text-align: center">Assign a Shift</h1>
+
+<form action="/api/shifts/<%=shift.id%>?_method=PUT" method="POST">
+  <input
+    type="text"
+    name="start_date"
+    value="<%=
+  shift.start_date %>"
+  />
+
+  <input type="text" name="user_id" value="<%= shift.user_id %>" />
+
+  <button>Assign!</button>
+  <a href="/api/shifts">Check shifts</a>
+  <a href="/api/workers">Check workers</a>
+</form>

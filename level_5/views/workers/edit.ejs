@@ -1,0 +1,10 @@
+<h1 style="text-align: center">Edit a Worker</h1>
+
+<form action="/api/workers/<%=worker.id%>?_method=PUT" method="POST">
+  <input type="text" name="name" value="<%= worker.name %>" />
+
+  <input type="text" name="status" value="<%= worker.status %>" />
+
+  <button>Update!</button>
+  <a href="/api/workers">Go Back</a>
+</form>

@@ -18,21 +18,20 @@ router.get('/', (req, res) => {
   Worker.find()
     .sort({ name: 1 }) // sort by date
     // .then(worker => res.json(worker))
-    .then(result => res.render('index.ejs', { workers: result }))
-    .catch(err =>
-      res.status(404).json({ noworkersfound: 'No workers found with this id' })
-    );
+    .then(result => res.render('workers/index.ejs', { workers: result }))
+    .catch(err => res.status(404).json({ noworkersfound: 'No workers found' }));
 });
 
 // @route   GET api/workers/:id
 // @desc    Get worker by id
-// router.get('/:id', (req, res) => {
-//   Worker.findById(req.params.id)
-//     .then(worker => res.json(worker))
-//     .catch(err =>
-//       res.status(404).json({ noworkerfound: 'No worker found with this id' })
-//     );
-// });
+router.get('/:id', (req, res) => {
+  Worker.findById(req.params.id)
+    // .then(worker => res.json(worker))
+    .then(result => res.render('workers/edit.ejs', { worker: result }))
+    .catch(err =>
+      res.status(404).json({ noworkerfound: 'No worker found with this id' })
+    );
+});
 
 // @route   POST api/workers/register
 // @desc    Registration worker
@@ -44,7 +43,6 @@ router.post('/register', (req, res) => {
 
   newWorker
     .save()
-    // .then(res => res.redirect('/'))
     // .then(worker => res.json(worker))
     .then(res.redirect('/api/workers'))
     .catch(err => console.log(err));
@@ -53,13 +51,10 @@ router.post('/register', (req, res) => {
 // @route   PUT api/workers/:id
 // @desc    Update worker
 router.put('/:id', (req, res) => {
-  Worker.findOne({ _id: req.params.id })
-    .then(worker => {
-      worker.name = req.body.name;
-      worker.status = req.body.status;
-      worker.save();
-    })
-    .then(() => res.json({ success: true }));
+  let newData = { name: req.body.name, status: req.body.status };
+  Worker.findByIdAndUpdate(req.params.id, { $set: newData })
+    .then(res.redirect('/api/workers'))
+    .catch(err => console.log(err));
 });
 
 // @route   DELETE api/workers/:id
