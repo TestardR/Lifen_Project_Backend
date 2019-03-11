@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-// Load Worker model
+// Load models
 const Worker = require('../../models/Worker');
+const Shift = require('../../models/Shift');
 
 // @route   GET api/workers/test
 // @desc    Tests worker route
@@ -61,12 +62,12 @@ router.put('/:id', (req, res) => {
 // @route   DELETE api/workers/:id
 // @desc    Delete worker
 router.delete('/:id', (req, res) => {
-  Worker.findById(req.params.id)
-    .then(worker => {
-      // Delete
-      worker.remove().then(() => res.json({ success: true }));
-    })
-    .catch(err => res.status(404).json({ workernotfound: 'No worker found' }));
+  Worker.findOneAndDelete({ _id: req.params.id }).then(() => {
+    Shift.findOneAndDelete({ user_id: req.params.id })
+      .then(() => res.json({ success: true }))
+      .catch(err =>
+        res.status(404).json({ workernotfound: 'No worker found' })
+      );
+  });
 });
-
 module.exports = router;
