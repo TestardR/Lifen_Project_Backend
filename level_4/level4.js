@@ -97,7 +97,13 @@ function interimShifts() {
 
   data.shifts.forEach(shift => {
     var shiftWorker = helpers.FirstOrDefault(data.workers, 'id', shift.user_id);
-    if (shiftWorker.status === 'interim') interim_shifts++;
+    // take into account edge cases
+    if (
+      shiftWorker != undefined &&
+      shiftWorker != null &&
+      shiftWorker.status === 'interim'
+    )
+      interim_shifts++;
   });
 
   return interim_shifts;
