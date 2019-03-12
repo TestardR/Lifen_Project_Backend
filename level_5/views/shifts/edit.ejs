@@ -4,11 +4,17 @@
   <input
     type="text"
     name="start_date"
+    placeholder="date"
     value="<%=
   shift.start_date.toDateString() %>"
   />
 
-  <input type="text" name="user_id" value="<%= shift.user_id %>" />
+  <input
+    type="text"
+    name="user_id"
+    placeholder="worker's id"
+    value="<%= shift.user_id %>"
+  />
 
   <button>Assign!</button>
   <a href="/api/shifts">Check shifts</a>
