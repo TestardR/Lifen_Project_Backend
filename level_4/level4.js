@@ -13,57 +13,19 @@ class ShiftWorker {
 
   salary() {
     let count = 0;
-    for (let i = 0; i < data.shifts.length; i++) {
-      if (data.shifts[i].user_id === this.id) {
-        if (
-          new Date(data.shifts[i].start_date).getDay() % 6 === 0 ||
-          new Date(data.shifts[i].start_date).getDay() % 0 === 0
-        ) {
-          count++;
-        }
-        count++;
-      }
-    }
-    let price_per_shift = 0;
-    switch (this.status) {
-      case 'medic':
-        price_per_shift = 270;
-        break;
-      case 'interne':
-        price_per_shift = 126;
-        break;
-      case 'interim':
-        price_per_shift = 480;
-    }
+    let price_per_shift;
+    count = helpers.count(this.id);
+    price_per_shift = helpers.status(this.status);
     return count * price_per_shift;
   }
 
   // Calculate fees and interim_shifts
   commission() {
     let count = 0;
-    for (let i = 0; i < data.shifts.length; i++) {
-      if (data.shifts[i].user_id === this.id) {
-        if (
-          new Date(data.shifts[i].start_date).getDay() % 6 === 0 ||
-          new Date(data.shifts[i].start_date).getDay() % 0 === 0
-        ) {
-          count++;
-        }
-        count++;
-      }
-    }
     let price_per_shift = 0;
     let fee = 0;
-    switch (this.status) {
-      case 'medic':
-        price_per_shift = 270;
-        break;
-      case 'interne':
-        price_per_shift = 126;
-        break;
-      case 'interim':
-        price_per_shift = 480;
-    }
+    count = helpers.count(this.id);
+    price_per_shift = helpers.status(this.status);
     return (fee = count * price_per_shift * 0.05);
   }
 
